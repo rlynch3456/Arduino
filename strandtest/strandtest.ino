@@ -54,6 +54,7 @@ void setup() {
 
 void loop() {
   // Fill along the length of the strip in various colors...
+  #if 0
   colorWipe(strip.Color(255,   0,   0), 50); // Red
   delay(1000);
   colorWipe(strip.Color(  0, 255,   0), 50); // Green
@@ -78,10 +79,43 @@ void loop() {
 
   rainbow(10);             // Flowing rainbow cycle along the whole strip
   theaterChaseRainbow(50); // Rainbow-enhanced theaterChase variant
+  #endif
+  
+  FadeInOut(0, 0, 255);
 }
 
 
 // Some functions of our own for creating animated effects -----------------
+
+
+void setAll(byte red, byte green, byte blue) {
+  for(int i = 0; i < LED_COUNT; i++ ) {
+    strip.setPixelColor(i, red, green, blue);
+  }
+  strip.show();
+}
+
+void FadeInOut(byte red, byte green, byte blue){
+  float r, g, b;
+     
+  for(int k = 0; k < 256; k=k+1) {
+    r = (k/256.0)*red;
+    g = (k/256.0)*green;
+    b = (k/256.0)*blue;
+    setAll(r,g,b);
+    strip.show();
+    delay(5);
+  }
+     
+  for(int k = 255; k >= 0; k=k-1) {
+    r = (k/256.0)*red;
+    g = (k/256.0)*green;
+    b = (k/256.0)*blue;
+    setAll(r,g,b);
+    strip.show();
+    delay(5);
+  }
+}
 
 // Fill strip pixels one after another with a color. Strip is NOT cleared
 // first; anything there will be covered pixel by pixel. Pass in color
