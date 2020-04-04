@@ -17,6 +17,9 @@
 // How many NeoPixels are attached to the Arduino?
 #define LED_COUNT 8
 
+/* do we want Serial output? */
+//#define DEBUG
+
 // Declare our NeoPixel strip object:
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
@@ -33,9 +36,9 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 const byte interruptPin = 2;
 volatile byte state = HIGH;
 long debounce_time = 250;
-volatile unsigned long last_micros;
+volatile unsigned long last_micros = 0;
 int r, g, b;
-int lastState;
+unsigned long lastState;
 
 void setup() {
   // put your setup code here, to run once:
@@ -56,9 +59,9 @@ void setup() {
   last_micros = micros();
 
   randomSeed(analogRead(0));
-
+#ifdef DEBUG
   Serial.begin(9600);
-
+#endif
   r = random(0, 255);
   g = random(0, 255);
   b = random(0, 255);
@@ -70,7 +73,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+#ifdef DEBUG
+  Serial.print("micros(): ");
+  Serial.println((unsigned long)micros());
+#endif
   /* Did the state change (did the button get pressed)? */
   if(lastState != state) {
     lastState = state;
@@ -86,9 +92,18 @@ void interrupt(){
    *  a long time, so micros() could have looped back around to zero.  This
    *  happens abut every 70 minutes.
    */
-  if(((long)(micros() - last_micros) >= debounce_time * 1000) || (micros() < last_micros)){
+
+  unsigned long curr_micros = (long)micros();
+#ifdef DEBUG
+  Serial.print("curr_micros: ");
+  Serial.println(curr_micros);
+  Serial.print("last_miros: ");
+  Serial.println(last_micros);
+  Serial.println();
+#endif  
+  if(((unsigned long)(curr_micros - last_micros) >= debounce_time * 1000) || (unsigned long)(curr_micros < last_micros)){
     state = !state;
-    last_micros = micros();
+    last_micros = curr_micros;
     changeColor();
   }
 }
