@@ -2,7 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "RJLNeo.h"
 
-RJLNeo::RJLNeo(int pin, int len)
+RJLNeo::RJLNeo(int pin, unsigned int len)
 {
   pinMode(pin, OUTPUT);
   _pin = pin;
@@ -54,4 +54,9 @@ void RJLNeo::wipeFromEnd(byte red, byte green, byte blue, int timeDelay)
 Adafruit_NeoPixel * RJLNeo::getStrip()
 {
   return _strip;
+}
+
+void RJLNeo::getLength(unsigned int * len)
+{
+  *len = _length;
 }
