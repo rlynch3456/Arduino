@@ -50,3 +50,8 @@ void RJLNeo::wipeFromEnd(byte red, byte green, byte blue, int timeDelay)
     delay(timeDelay);
   }
 }
+
+Adafruit_NeoPixel * RJLNeo::getStrip()
+{
+  return _strip;
+}

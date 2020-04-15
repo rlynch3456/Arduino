@@ -11,6 +11,7 @@ class RJLNeo
     void setAll(byte red, byte green, byte blue);
     void wipeFromStart(byte red, byte green, byte blue, int timeDelay);
     void wipeFromEnd(byte red, byte green, byte blue, int timeDelay);
+    Adafruit_NeoPixel * getStrip();
 
   private:
     int _pin;

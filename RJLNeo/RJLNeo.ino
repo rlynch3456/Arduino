@@ -1,10 +1,13 @@
 #include "RJLNeo.h"
+#include "blob.h"
 
 RJLNeo neo(6, 21);
+Blob *blob1, *blob2;
 
 void setup() {
   // put your setup code here, to run once:
-
+  Adafruit_NeoPixel * strip = neo.getStrip();
+  blob1 = new Blob(1, 4, 0, 255, 0, strip);
 }
 
 void loop() {
@@ -19,4 +22,8 @@ void loop() {
   neo.wipeFromEnd(0, 0, 255, 100);
   neo.wipeFromEnd(0, 0, 0, 100);
 
+  neo.setAll(0, 0, 0);
+  delay(1000);
+  blob1->draw();
+  delay(1000);
 }
