@@ -24,3 +24,29 @@ void RJLNeo::setAll(byte red, byte green, byte blue)
   }
   _strip->show();
 }
+
+void RJLNeo::wipeFromStart(byte red, byte green, byte blue, int timeDelay)
+{
+  int i;
+
+  // fill the strip
+  for( i = 0; i < _length; i++)
+  {
+    _strip->setPixelColor(i, red, green, blue);
+    _strip->show();
+    delay(timeDelay);
+  }
+}
+
+void RJLNeo::wipeFromEnd(byte red, byte green, byte blue, int timeDelay)
+{
+  int i;
+
+  // fill the strip
+  for( i = _length; i >=  0; i--)
+  {
+    _strip->setPixelColor(i, red, green, blue);
+    _strip->show();
+    delay(timeDelay);
+  }
+}
