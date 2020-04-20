@@ -2,7 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "blob.h"
 
-Blob::Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafruit_NeoPixel *strip)
+Blob::Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafruit_NeoPixel *strip, RJLNeo *neo)
 {
   _start = start;
   _width = width;
@@ -10,6 +10,7 @@ Blob::Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafr
   _green = green;
   _blue = blue;
   _strip = strip;
+  _neo = neo;
 }
 
 /*
@@ -20,11 +21,10 @@ Blob::Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafr
 
 void Blob::draw()
 {
-  for(int i = 0; i < _width; i++)
+    for(int i = 0; i < _width; i++)
     _strip->setPixelColor(_start + i, _red, _green, _blue);
 
   _strip->show();
-  
 }
 
 /*
@@ -36,11 +36,13 @@ void Blob::draw()
 
 void Blob::erase()
 {
-    for(int i = 0; i < _width; i++)
-    _strip->setPixelColor(_start + i, 0, 0, 0);
+  byte red, green, blue;
+  _neo->getBackgroundColor(&red, &green, &blue);
+
+  for(int i = 0; i < _width; i++)
+    _strip->setPixelColor(_start + i, red, green, blue);
 
   _strip->show();
-
 }
 
 /*
@@ -103,12 +105,12 @@ void Blob::getColor(byte *red, byte *green, byte * blue)
   *blue = _blue;
 }
 
-void Blob::getStart(int *start)
+int Blob::getStart()
 {
-  *start = _start;
+  return _start;
 }
 
-void Blob::getWidth(unsigned int *width)
+unsigned int Blob::getWidth()
 {
-  *width = _width;
+  return _width;
 }

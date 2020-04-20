@@ -3,12 +3,13 @@
 
 #include "Arduino.h"
 #include <Adafruit_NeoPixel.h>
+#include "RJLNeo.h"
 
 class Blob
 {
 
   public:
-    Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafruit_NeoPixel *strip);
+    Blob(int start, unsigned int width, byte red, byte green, byte blue, Adafruit_NeoPixel *strip, RJLNeo *neo);
     void draw();
     void shift(int delta);
     void setColor(byte red, byte green, byte blue);
@@ -18,14 +19,15 @@ class Blob
 
 /* getter functions */
     void getColor(byte *red, byte *green, byte * blue);
-    void getStart(int *start);
-    void getWidth(unsigned int *width);
+    int getStart();
+    unsigned int getWidth();
 
   private:
     int _start;
     unsigned int _width;
     byte _red, _green, _blue;
     Adafruit_NeoPixel *_strip;
+    RJLNeo *_neo;
 
 
 
