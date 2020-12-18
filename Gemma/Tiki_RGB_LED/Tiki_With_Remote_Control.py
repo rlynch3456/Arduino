@@ -15,7 +15,7 @@ import pulseio
 
 pixel_pin = board.D1    # Pin where NeoPixels are connected
 
-pixel_count = 6         # Number of NeoPixels
+pixel_count = 10        # Number of NeoPixels
 
 speed = .1              # Animation speed (in seconds).
                         # This is how long to spend in a single animation frame.

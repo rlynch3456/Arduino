@@ -2,7 +2,7 @@ import time
 import board
 import neopixel
 
-pixel_count = 6         # Number of NeoPixels
+pixel_count = 10         # Number of NeoPixels
 pixel_pin = board.D1    # Pin where NeoPixels are connected
 
 speed = .1              # Animation speed (in seconds).
